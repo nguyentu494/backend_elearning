@@ -16,10 +16,7 @@ package vn.edu.iuh.fit.appelearingbe.ids;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import vn.edu.iuh.fit.appelearingbe.models.Lesson;
 import vn.edu.iuh.fit.appelearingbe.models.User;
 
@@ -28,6 +25,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Embeddable
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class LessonUserId implements Serializable {

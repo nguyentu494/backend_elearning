@@ -7,6 +7,9 @@
 package vn.edu.iuh.fit.appelearingbe.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import vn.edu.iuh.fit.appelearingbe.enums.StatusBill;
 import vn.edu.iuh.fit.appelearingbe.ids.EnrollCourseId;
 
@@ -20,6 +23,9 @@ import java.time.LocalDateTime;
  * @version: 1.0
  */
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Bill {
     @EmbeddedId
     private EnrollCourseId id;

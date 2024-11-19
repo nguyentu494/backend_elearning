@@ -38,13 +38,4 @@ public class UserControllers {
         }
         return ResponseEntity.ok(userRepository.findByEmailAndPassword(email, password));
     }
-//@PostMapping(value = "login", produces = "application/json")
-//public ResponseEntity<?> checkLogin(@RequestParam String email, @RequestParam String password) {
-//    User user = userRepository.findByEmailAndPassword(email, password);
-//    System.out.println(email + " " + password);
-//    if (user == null) {
-//        return ResponseEntity.ok("Login failed");
-//    }
-//    return ResponseEntity.ok(userRepository.findByEmailAndPassword(email, password));
-//}
 }

@@ -14,6 +14,7 @@ import vn.edu.iuh.fit.appelearingbe.enums.StatusCourse;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /*
  * @description:
@@ -46,5 +47,8 @@ public class Course {
     private Teacher teacher;
 
     private StatusCourse status;
+
+    @OneToMany(mappedBy = "course")
+    private List<Section> sections;
 
 }

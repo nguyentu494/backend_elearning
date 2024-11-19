@@ -17,10 +17,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import vn.edu.iuh.fit.appelearingbe.models.Course;
 import vn.edu.iuh.fit.appelearingbe.models.Student;
 import vn.edu.iuh.fit.appelearingbe.models.User;
@@ -31,6 +28,7 @@ import java.io.Serializable;
 @Embeddable
 @NoArgsConstructor
 @Getter @Setter
+@AllArgsConstructor
 public class EnrollCourseId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")

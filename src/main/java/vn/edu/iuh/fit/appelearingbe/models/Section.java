@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 /*
  * @description:
  * @author: Tuss Nguyen
@@ -30,6 +32,9 @@ public class Section {
     private Integer sectionNumber;
     private String title;
     @ManyToOne
+    @JoinColumn(name = "course_id")
     private Course course;
+    @OneToMany(mappedBy = "section")
+    private List<Lesson> lessons;
 
 }

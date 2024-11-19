@@ -7,6 +7,7 @@
 package vn.edu.iuh.fit.appelearingbe.models;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 /*
  * @description:
@@ -14,6 +15,11 @@ import jakarta.persistence.*;
  * @date: 15/11/2024
  * @version: 1.0
  */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 public class Category {
     @Id

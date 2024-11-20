@@ -7,6 +7,10 @@
 package vn.edu.iuh.fit.appelearingbe.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /*
  * @description:
@@ -15,6 +19,9 @@ import jakarta.persistence.*;
  * @version: 1.0
  */
 @Entity
+@Getter @Setter
+@NoArgsConstructor
+@ToString
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

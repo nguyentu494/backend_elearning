@@ -6,6 +6,8 @@
 
 package vn.edu.iuh.fit.appelearingbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +32,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
     private Long id;
-    private String rating;
+    private Double rating;
     private String image;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -44,11 +46,12 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private Teacher teacher;
 
     private StatusCourse status;
 
     @OneToMany(mappedBy = "course")
+    @JsonIgnore
     private List<Section> sections;
-
 }

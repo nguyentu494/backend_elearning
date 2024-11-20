@@ -18,9 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.iuh.fit.appelearingbe.DTO.CourseDetail;
 import vn.edu.iuh.fit.appelearingbe.models.Course;
 import vn.edu.iuh.fit.appelearingbe.repositories.CourseRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,6 +47,20 @@ public class CourseController {
     @PostMapping
     public ResponseEntity<Course> createCourse(@RequestBody Course course) {
         return ResponseEntity.status(HttpStatus.CREATED).body(courseRepository.save(course));
+    }
+
+    @GetMapping("/top/{top}")
+    public ResponseEntity<List<CourseDetail>> getTopCourses(@PathVariable int top) {
+        List<CourseDetail> courseDetail = new ArrayList<>();
+        List<Course> courses = courseRepository.findByRatingGreaterThanEqual((double) top);
+        courses.forEach(course -> {
+            CourseDetail detail = new CourseDetail();
+            detail.setCourse(course);
+            detail.setTeacherName(course.getTeacher().getName());
+            System.out.println(detail);
+            courseDetail.add(detail);
+        });
+        return ResponseEntity.ok(courseDetail);
     }
 
 }

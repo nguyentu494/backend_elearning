@@ -8,10 +8,14 @@ package vn.edu.iuh.fit.appelearingbe.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import vn.edu.iuh.fit.appelearingbe.enums.StatusCourse;
 
 import java.time.LocalDate;
@@ -27,6 +31,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@ToString
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +57,13 @@ public class Course {
     private StatusCourse status;
 
     @OneToMany(mappedBy = "course")
-    @JsonIgnore
+    @JsonManagedReference
+    @ToString.Exclude
     private List<Section> sections;
+
+    @OneToMany(mappedBy = "course")
+    @JsonManagedReference
+    @ToString.Exclude
+    private List<Feedback> feedbacks;
+
 }

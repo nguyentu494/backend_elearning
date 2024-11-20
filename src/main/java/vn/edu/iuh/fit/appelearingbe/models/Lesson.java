@@ -13,15 +13,18 @@ package vn.edu.iuh.fit.appelearingbe.models;
  * @version: 1.0
  */
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +38,6 @@ public class Lesson {
     private Long view;
     @ManyToOne
     @JoinColumn(name = "section_id")
+    @JsonBackReference
     private Section section;
 }

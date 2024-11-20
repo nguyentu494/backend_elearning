@@ -6,11 +6,14 @@
 
 package vn.edu.iuh.fit.appelearingbe.models;
 
-import jakarta.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 /*
  * @description:
@@ -26,4 +29,8 @@ public class Student extends User{
     private String school;
     private String grade;
 
+    @OneToMany(mappedBy = "id.student")
+    @JsonIgnoreProperties("student")
+    @ToString.Exclude
+    private List<EnrollCourse> enrollCourses;
 }

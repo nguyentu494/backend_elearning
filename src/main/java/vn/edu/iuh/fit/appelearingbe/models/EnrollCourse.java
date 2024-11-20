@@ -16,6 +16,7 @@ package vn.edu.iuh.fit.appelearingbe.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,5 +35,4 @@ public class EnrollCourse {
     private LocalDateTime enrolledDate;
     private int progress;
     private LocalDateTime completedDate;
-
 }

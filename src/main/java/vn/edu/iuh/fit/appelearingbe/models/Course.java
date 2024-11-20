@@ -67,4 +67,8 @@ public class Course {
     @ToString.Exclude
     private List<Feedback> feedbacks;
 
+    @OneToMany(mappedBy = "id.course")
+    @JsonIgnoreProperties("course")
+    @ToString.Exclude
+    private List<EnrollCourse> enrollCourses;
 }

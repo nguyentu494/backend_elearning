@@ -18,6 +18,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 import vn.edu.iuh.fit.appelearingbe.models.Lesson;
+import vn.edu.iuh.fit.appelearingbe.models.Student;
 import vn.edu.iuh.fit.appelearingbe.models.User;
 
 import java.io.Serializable;
@@ -34,5 +35,5 @@ public class LessonUserId implements Serializable {
     private Lesson lesson;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Student student;
 }

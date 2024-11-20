@@ -44,6 +44,4 @@ public class TeacherController {
     public ResponseEntity<Teacher> createTeacher(@RequestBody Teacher teacher) {
         return ResponseEntity.status(HttpStatus.CREATED).body(teacherRepository.save(teacher));
     }
-
-
 }

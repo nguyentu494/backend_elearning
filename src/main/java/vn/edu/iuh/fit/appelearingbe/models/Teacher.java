@@ -7,6 +7,7 @@
 package vn.edu.iuh.fit.appelearingbe.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -33,7 +34,7 @@ public class Teacher extends User{
     private int experience;
     private String school;
     @OneToMany(mappedBy = "teacher")
-    @JsonIgnore
+    @JsonIgnoreProperties("teacher")
     @ToString.Exclude
     private List<Course> courses;
 }

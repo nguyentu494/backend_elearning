@@ -1,5 +1,5 @@
 /*
- * @ (#) CategoryController.java    1.0    11/19/2024
+ * @ (#) SectionController.java    1.0    11/20/2024
  *
  *
  */
@@ -8,7 +8,7 @@ package vn.edu.iuh.fit.appelearingbe.resources;
 /*
  * @Description:
  * @Author: Nguyen Thanh Thuan
- * @Date: 11/19/2024
+ * @Date: 11/20/2024
  * @Version: 1.0
  *
  */
@@ -18,20 +18,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.iuh.fit.appelearingbe.models.Category;
-import vn.edu.iuh.fit.appelearingbe.repositories.CategoryRepository;
+import vn.edu.iuh.fit.appelearingbe.models.Section;
+import vn.edu.iuh.fit.appelearingbe.repositories.SectionRepository;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/categories")
-public class CategoryController {
+@RequestMapping("/api/v1/sections")
+public class SectionController {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private SectionRepository sectionRepository;
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        return ResponseEntity.ok(categoryRepository.findAll());
+    public ResponseEntity<List<Section>> getAllSections() {
+        return ResponseEntity.ok(sectionRepository.findAll());
     }
 }

@@ -15,6 +15,7 @@ package vn.edu.iuh.fit.appelearingbe.resources;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,8 @@ public class CourseController {
     private EnrollCourseRepository enrollCourseRepository;
 
     @GetMapping
-    public ResponseEntity<List<Course>> getAllCourses() {
+    @Procedure("application/json")
+    public ResponseEntity<List<Course>> getAllCategories() {
         return ResponseEntity.ok(courseRepository.findAll());
     }
 
@@ -78,5 +80,11 @@ public class CourseController {
         });
         return ResponseEntity.ok(courseDetail);
     }
+
+    @GetMapping("/teacher/{id}")
+    public ResponseEntity<List<Course>> getCourseByTeacher(@PathVariable Long id) {
+        return ResponseEntity.ok(courseRepository.findByTeacherId(id));
+    }
+
 
 }

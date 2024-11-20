@@ -6,11 +6,14 @@
 
 package vn.edu.iuh.fit.appelearingbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 /*
  * @description:
@@ -31,5 +34,10 @@ public class Category {
     private String name;
 
     private String image;
+
+//    @OneToMany(mappedBy = "category")
+//    @JsonIgnoreProperties("category")
+//    @ToString.Exclude
+//    private List<Course> courses;
 
 }

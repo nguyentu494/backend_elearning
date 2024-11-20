@@ -7,6 +7,8 @@
 package vn.edu.iuh.fit.appelearingbe.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -37,10 +39,10 @@ public class Section {
     private String title;
     @ManyToOne
     @JoinColumn(name = "course_id")
-    @JsonBackReference
+    @JsonIgnoreProperties("sections")
     private Course course;
     @OneToMany(mappedBy = "section")
-    @JsonManagedReference
+    @JsonIgnoreProperties("section")
     @ToString.Exclude
     private List<Lesson> lessons;
 }

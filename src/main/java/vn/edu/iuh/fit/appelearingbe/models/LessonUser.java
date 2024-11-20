@@ -26,7 +26,6 @@ import vn.edu.iuh.fit.appelearingbe.ids.LessonUserId;
 @NoArgsConstructor
 public class LessonUser {
     @EmbeddedId
-
     private LessonUserId id;
     private StatusLesson status;
 }

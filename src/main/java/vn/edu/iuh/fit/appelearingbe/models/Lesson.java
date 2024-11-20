@@ -14,6 +14,9 @@ package vn.edu.iuh.fit.appelearingbe.models;
  */
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +41,6 @@ public class Lesson {
     private Long view;
     @ManyToOne
     @JoinColumn(name = "section_id")
-    @JsonBackReference
+    @JsonIgnoreProperties("lessons")
     private Section section;
 }

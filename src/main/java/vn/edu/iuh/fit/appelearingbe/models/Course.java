@@ -47,22 +47,23 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties("courses")
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+    @JsonIgnoreProperties("courses")
     private Teacher teacher;
 
     private StatusCourse status;
 
     @OneToMany(mappedBy = "course")
-    @JsonIgnore
+    @JsonIgnoreProperties("course")
     @ToString.Exclude
     private List<Section> sections;
 
     @OneToMany(mappedBy = "course")
-    @JsonIgnore
+    @JsonIgnoreProperties("course")
     @ToString.Exclude
     private List<Feedback> feedbacks;
 

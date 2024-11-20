@@ -57,12 +57,12 @@ public class Course {
     private StatusCourse status;
 
     @OneToMany(mappedBy = "course")
-    @JsonManagedReference
+    @JsonIgnore
     @ToString.Exclude
     private List<Section> sections;
 
     @OneToMany(mappedBy = "course")
-    @JsonManagedReference
+    @JsonIgnore
     @ToString.Exclude
     private List<Feedback> feedbacks;
 

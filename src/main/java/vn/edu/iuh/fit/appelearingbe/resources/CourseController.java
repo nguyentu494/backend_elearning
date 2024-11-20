@@ -20,7 +20,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.appelearingbe.DTO.CourseDetail;
 import vn.edu.iuh.fit.appelearingbe.models.Course;
+import vn.edu.iuh.fit.appelearingbe.models.Section;
 import vn.edu.iuh.fit.appelearingbe.repositories.CourseRepository;
+import vn.edu.iuh.fit.appelearingbe.repositories.EnrollCourseRepository;
+import vn.edu.iuh.fit.appelearingbe.repositories.LessonRepository;
+import vn.edu.iuh.fit.appelearingbe.repositories.SectionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,12 @@ public class CourseController {
 
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private SectionRepository sectionRepository;
+    @Autowired
+    private LessonRepository lessonRepository;
+    @Autowired
+    private EnrollCourseRepository enrollCourseRepository;
 
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses() {
@@ -57,7 +67,13 @@ public class CourseController {
             CourseDetail detail = new CourseDetail();
             detail.setCourse(course);
             detail.setTeacherName(course.getTeacher().getName());
-            System.out.println(detail);
+            List<Section> sections = sectionRepository.findByCourseId(course.getId());
+            int totalSum = 0;
+            for (Section section : sections) {
+                totalSum += lessonRepository.countBySectionId(section.getId());
+            }
+            detail.setTotalLesson(totalSum);
+            detail.setTotalRegister(enrollCourseRepository.countById_Course_Id(course.getId()));
             courseDetail.add(detail);
         });
         return ResponseEntity.ok(courseDetail);

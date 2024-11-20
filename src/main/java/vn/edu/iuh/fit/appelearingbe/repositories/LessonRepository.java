@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
     List<Lesson> findBySectionId(long sectionId);
+    int countBySectionId(long sectionId);
 }

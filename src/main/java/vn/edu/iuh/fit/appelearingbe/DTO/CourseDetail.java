@@ -26,4 +26,6 @@ import vn.edu.iuh.fit.appelearingbe.models.Course;
 public class CourseDetail {
     private Course course;
     private String teacherName;
+    private int totalLesson;
+    private int totalRegister;
 }

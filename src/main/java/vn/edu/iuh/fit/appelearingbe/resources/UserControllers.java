@@ -32,10 +32,18 @@ public class UserControllers {
         String email = body.get("email");
         String password = body.get("password");
         User user = userRepository.findByEmailAndPassword(email, password);
-        System.out.println(email + " " + password);
+        System.out.println(user);
+//        System.out.println(email + " " + password);
         if (user == null) {
             return ResponseEntity.ok("Login failed");
         }
         return ResponseEntity.ok(userRepository.findByEmailAndPassword(email, password));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getById(@PathVariable Long id) {
+        return userRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

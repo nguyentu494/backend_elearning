@@ -53,13 +53,13 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("courses")
+    @JsonBackReference
     private Teacher teacher;
 
     private StatusCourse status;
 
     @OneToMany(mappedBy = "course")
-    @JsonIgnoreProperties("course")
+    @JsonManagedReference
     @ToString.Exclude
     private List<Section> sections;
 
@@ -69,7 +69,7 @@ public class Course {
     private List<Feedback> feedbacks;
 
     @OneToMany(mappedBy = "id.course")
-    @JsonIgnoreProperties("course")
+    @JsonManagedReference
     @ToString.Exclude
     private List<EnrollCourse> enrollCourses;
 }

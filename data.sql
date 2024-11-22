@@ -41,11 +41,11 @@ INSERT INTO `bill` (`created_date`, `status`, `course_id`, `user_id`, `payment_i
 -- Dumping data for table elearning.category: ~5 rows (approximately)
 DELETE FROM `category`;
 INSERT INTO `category` (`category_id`, `image`, `name`) VALUES
-	(1, NULL, 'Business'),
-	(2, NULL, 'Code'),
-	(3, NULL, 'Movie'),
-	(4, NULL, 'Design'),
-	(5, NULL, 'Language');
+	(1, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006921/appELearning/trend-up_o24cjx.png', 'Business'),
+	(2, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006915/appELearning/coding_yzkoqa.png', 'Code'),
+	(3, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006915/appELearning/cam-recorder_mf0l4t.png', 'Movie'),
+	(4, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006916/appELearning/pen_yaszeu.png', 'Design'),
+	(5, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006915/appELearning/earth_cb0v9r.png', 'Language');
 
 -- Dumping data for table elearning.course: ~7 rows (approximately)
 DELETE FROM `course`;
@@ -188,7 +188,7 @@ INSERT INTO `lesson` (`lesson_id`, `lesson_number`, `time`, `title`, `url`, `vie
 
 -- Dumping data for table elearning.lesson_user: ~252 rows (approximately)
 DELETE FROM `lesson_user`;
-INSERT INTO `lesson_user` (`status`, `user_id`, `lesson_id`) VALUES
+INSERT INTO `lesson_user` (`status`, `student_id`, `lesson_id`) VALUES
 	(1, 3, 1),
 	(1, 4, 1),
 	(1, 5, 1),
@@ -445,12 +445,12 @@ INSERT INTO `lesson_user` (`status`, `user_id`, `lesson_id`) VALUES
 -- Dumping data for table elearning.payment: ~4 rows (approximately)
 DELETE FROM `payment`;
 INSERT INTO `payment` (`payment_id`, `image`, `payment_name`) VALUES
-	(1, NULL, 'Paypal'),
-	(2, NULL, 'Google Pay'),
-	(3, NULL, 'Apple Pay'),
-	(4, NULL, 'atm');
+	(1, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006951/appELearning/pay-pal_dbetsw.png', 'Paypal'),
+	(2, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006950/appELearning/google-pay_olyauw.png', 'Google Pay'),
+	(3, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006949/appELearning/apple-pay_xbrut5.png', 'Apple Pay'),
+	(4, 'https://res.cloudinary.com/dx0blzlhd/image/upload/v1732006950/appELearning/credit-card_bd6lfb.png', 'atm');
 
--- Dumping data for table elearning.question: ~0 rows (approximately)
+-- Dumping data for table elearning.question: ~0 rows (approximately)bill
 DELETE FROM `question`;
 
 -- Dumping data for table elearning.section: ~27 rows (approximately)

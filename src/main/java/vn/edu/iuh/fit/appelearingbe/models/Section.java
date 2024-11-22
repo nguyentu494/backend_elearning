@@ -39,10 +39,10 @@ public class Section {
     private String title;
     @ManyToOne
     @JoinColumn(name = "course_id")
-    @JsonIgnoreProperties("sections")
+    @JsonBackReference
     private Course course;
     @OneToMany(mappedBy = "section")
-    @JsonIgnoreProperties("section")
+    @JsonManagedReference
     @ToString.Exclude
     private List<Lesson> lessons;
 }

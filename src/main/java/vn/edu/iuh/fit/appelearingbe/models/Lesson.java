@@ -13,8 +13,8 @@ package vn.edu.iuh.fit.appelearingbe.models;
  * @version: 1.0
  */
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -22,6 +22,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +43,11 @@ public class Lesson {
     private Long view;
     @ManyToOne
     @JoinColumn(name = "section_id")
-    @JsonIgnoreProperties("lessons")
+    @JsonBackReference
     private Section section;
+
+    @OneToMany(mappedBy = "id.lesson")
+    @JsonManagedReference
+    @ToString.Exclude
+    private List<LessonUser> lessonUsers;
 }

@@ -6,7 +6,9 @@
 
 package vn.edu.iuh.fit.appelearingbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +32,12 @@ public class Student extends User{
     private String grade;
 
     @OneToMany(mappedBy = "id.student")
-    @JsonIgnoreProperties("student")
+    @JsonIgnore
     @ToString.Exclude
     private List<EnrollCourse> enrollCourses;
+
+    @OneToMany(mappedBy = "id.student")
+    @JsonIgnore
+    @ToString.Exclude
+    private List<LessonUser> lessonUsers;
 }

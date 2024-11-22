@@ -44,6 +44,7 @@ public class Course {
     private String title;
     private String description;
     private Double price;
+    private int view;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.appelearingbe.DTO.CourseDetail;
 import vn.edu.iuh.fit.appelearingbe.models.Course;
+import vn.edu.iuh.fit.appelearingbe.models.Lesson;
 import vn.edu.iuh.fit.appelearingbe.models.Section;
 import vn.edu.iuh.fit.appelearingbe.repositories.CourseRepository;
 import vn.edu.iuh.fit.appelearingbe.repositories.EnrollCourseRepository;
@@ -71,11 +72,19 @@ public class CourseController {
             detail.setTeacherName(course.getTeacher().getName());
             List<Section> sections = sectionRepository.findByCourseId(course.getId());
             int totalSum = 0;
+            int totalSeconds = 0;
             for (Section section : sections) {
                 totalSum += lessonRepository.countBySectionId(section.getId());
+                for (Lesson lesson : section.getLessons()) {
+                    String[] timeParts = lesson.getTime().split(":");
+                    int minutes = Integer.parseInt(timeParts[0]);
+                    int seconds = Integer.parseInt(timeParts[1]);
+                    totalSeconds += minutes + seconds/60;
+                }
             }
             detail.setTotalLesson(totalSum);
             detail.setTotalRegister(enrollCourseRepository.countById_Course_Id(course.getId()));
+            detail.setTotalMinutes(totalSeconds);
             courseDetail.add(detail);
         });
         return ResponseEntity.ok(courseDetail);

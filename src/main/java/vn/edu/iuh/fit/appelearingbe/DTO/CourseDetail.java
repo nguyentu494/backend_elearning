@@ -28,4 +28,5 @@ public class CourseDetail {
     private String teacherName;
     private int totalLesson;
     private int totalRegister;
+    private int totalMinutes;
 }

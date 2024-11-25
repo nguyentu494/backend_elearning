@@ -20,6 +20,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import vn.edu.iuh.fit.appelearingbe.ids.EnrollCourseId;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class EnrollCourse {
     @EmbeddedId
     @Column(name = "enroll_course_id")

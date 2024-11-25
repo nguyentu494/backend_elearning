@@ -19,7 +19,9 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.iuh.fit.appelearingbe.DTO.CourseComponetDTO;
 import vn.edu.iuh.fit.appelearingbe.DTO.CourseDetail;
+import vn.edu.iuh.fit.appelearingbe.enums.StatusLesson;
 import vn.edu.iuh.fit.appelearingbe.models.Course;
 import vn.edu.iuh.fit.appelearingbe.models.Lesson;
 import vn.edu.iuh.fit.appelearingbe.models.Section;
@@ -45,9 +47,21 @@ public class CourseController {
     private EnrollCourseRepository enrollCourseRepository;
 
     @GetMapping
-    @Procedure("application/json")
-    public ResponseEntity<List<Course>> getAllCategories() {
-        return ResponseEntity.ok(courseRepository.findAll());
+    public ResponseEntity<List<CourseComponetDTO>> getAllCategories() {
+        List<CourseComponetDTO> courseComponetPopularDTOList = new ArrayList<>();
+        List<Course> courses = courseRepository.findAll();
+        courses.forEach(course -> {
+            CourseComponetDTO courseComponetPopularDTO = new CourseComponetDTO();
+            courseComponetPopularDTO.setCourseId(course.getId());
+            courseComponetPopularDTO.setCourseName(course.getTitle());
+            courseComponetPopularDTO.setCourseImage(course.getImage());
+            courseComponetPopularDTO.setRating(course.getRating());
+            courseComponetPopularDTO.setTeacherName(course.getTeacher().getName());
+            courseComponetPopularDTO.setTotalFeedback(course.getFeedbacks().size());
+            courseComponetPopularDTO.setStatus(course.getStatus().name().equals("HOT") ? "Hot" : course.getStatus().name().equals("NEW") ? "New" : course.getStatus().name().equals("BEST_SELLER") ? "Best Seller" : "");
+            courseComponetPopularDTOList.add(courseComponetPopularDTO);
+        });
+        return ResponseEntity.ok(courseComponetPopularDTOList);
     }
 
     @GetMapping("/{id}")
@@ -122,5 +136,48 @@ public class CourseController {
         });
         return ResponseEntity.ok(courseDetail);
     }
+    @GetMapping("/popular")
+    public ResponseEntity<List<CourseComponetDTO>> getCourseTop5() {
+        List<CourseComponetDTO> courseComponetPopularDTOList = new ArrayList<>();
+        List<Course> courses = courseRepository.findTop5ByOrderByViewDesc();
+        courses.forEach(course -> {
+            CourseComponetDTO courseComponetPopularDTO = new CourseComponetDTO();
+            courseComponetPopularDTO.setCourseId(course.getId());
+            courseComponetPopularDTO.setCourseName(course.getTitle());
+            courseComponetPopularDTO.setCourseImage(course.getImage());
+            courseComponetPopularDTO.setRating(course.getRating());
+            courseComponetPopularDTO.setTeacherName(course.getTeacher().getName());
+            courseComponetPopularDTO.setTotalFeedback(course.getFeedbacks().size());
+            courseComponetPopularDTO.setStatus(course.getStatus().name().equals("HOT") ? "Hot" : course.getStatus().name().equals("NEW") ? "New" : course.getStatus().name().equals("BEST_SELLER") ? "Best Seller" : "");
+            courseComponetPopularDTOList.add(courseComponetPopularDTO);
+        });
+        return ResponseEntity.ok(courseComponetPopularDTOList);
+    }
 
+    @GetMapping("/student/{id}")
+    public ResponseEntity<List<CourseComponetDTO>> getCourseByStudent(@PathVariable Long id) {
+        List<CourseComponetDTO> courseComponetDTOList = new ArrayList<>();
+        List<Course> courses = courseRepository.findByEnrollCourses_Id_Student_Id(id);
+        courses.forEach(course -> {
+            CourseComponetDTO courseComponetDTO = new CourseComponetDTO();
+            courseComponetDTO.setCourseId(course.getId());
+            courseComponetDTO.setCourseName(course.getTitle());
+            courseComponetDTO.setCourseImage(course.getImage());
+            courseComponetDTO.setRating(course.getRating());
+            courseComponetDTO.setNameCategory(course.getCategory().getName());
+            courseComponetDTO.setTotal_time_spent(0);
+            courseComponetDTO.setProgress(course.getEnrollCourses().stream().filter(enrollCourse ->
+                    enrollCourse.getId().getCourse().getId().equals(course.getId()) && enrollCourse.getId().getStudent().getId() == id).findFirst().get().getProgress());
+            courseComponetDTO.setTotalLesson(course.getSections()
+                    .stream().reduce(0, (subtotal, section) ->
+                            subtotal + section.getLessons().size(), Integer::sum));
+            courseComponetDTO.setTotalLessonComplete(course.getSections().stream().mapToInt(section ->
+                    (int) section.getLessons().stream().filter(lesson ->
+                            lesson.getLessonUsers().stream().anyMatch(lessonUser ->
+                                    (lessonUser.getId().getStudent().getId() == id && lessonUser.getStatus().equals(StatusLesson.COMPLETED))
+                            )).count()).sum());
+            courseComponetDTOList.add(courseComponetDTO);
+        });
+        return ResponseEntity.ok(courseComponetDTOList);
+    }
 }

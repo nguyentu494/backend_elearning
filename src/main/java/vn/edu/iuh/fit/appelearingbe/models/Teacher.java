@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import vn.edu.iuh.fit.appelearingbe.enums.StatusQualification;
 
 import java.util.List;
 
@@ -33,8 +34,9 @@ import java.util.List;
 public class Teacher extends User{
     private int experience;
     private String school;
+    private StatusQualification qualification;
     @OneToMany(mappedBy = "teacher")
-    @JsonIgnoreProperties("teacher")
+    @JsonManagedReference
     @ToString.Exclude
     private List<Course> courses;
 }

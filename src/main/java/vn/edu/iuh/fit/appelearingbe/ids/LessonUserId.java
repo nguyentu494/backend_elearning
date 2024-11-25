@@ -13,6 +13,8 @@ package vn.edu.iuh.fit.appelearingbe.ids;
  * @version: 1.0
  */
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -29,11 +31,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class LessonUserId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "lesson_id")
+    @JsonBackReference
     private Lesson lesson;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "student_id")
+    @JsonBackReference
     private Student student;
 }

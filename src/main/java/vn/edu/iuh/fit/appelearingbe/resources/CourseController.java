@@ -95,5 +95,32 @@ public class CourseController {
         return ResponseEntity.ok(courseRepository.findByTeacherId(id));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<CourseDetail>> searchCourse(@RequestParam String name) {
+        List<Course> courses = courseRepository.findTop9ByCategory_NameContainsIgnoreCaseOrTeacher_NameContainsIgnoreCaseOrTitleContainsIgnoreCase(name, name, name);
+        List<CourseDetail> courseDetail = new ArrayList<>();
+        courses.forEach(course -> {
+            CourseDetail detail = new CourseDetail();
+            detail.setCourse(course);
+            detail.setTeacherName(course.getTeacher().getName());
+            List<Section> sections = sectionRepository.findByCourseId(course.getId());
+            int totalSum = 0;
+            int totalSeconds = 0;
+            for (Section section : sections) {
+                totalSum += lessonRepository.countBySectionId(section.getId());
+                for (Lesson lesson : section.getLessons()) {
+                    String[] timeParts = lesson.getTime().split(":");
+                    int minutes = Integer.parseInt(timeParts[0]);
+                    int seconds = Integer.parseInt(timeParts[1]);
+                    totalSeconds += minutes + seconds/60;
+                }
+            }
+            detail.setTotalLesson(totalSum);
+            detail.setTotalRegister(enrollCourseRepository.countById_Course_Id(course.getId()));
+            detail.setTotalMinutes(totalSeconds);
+            courseDetail.add(detail);
+        });
+        return ResponseEntity.ok(courseDetail);
+    }
 
 }

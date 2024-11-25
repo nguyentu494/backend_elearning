@@ -157,7 +157,7 @@ public class AppELearingBeApplication implements CommandLineRunner {
 //                    enrollCourse.setEnrolledDate(enrolledDate);
 //
 //                    // Random trạng thái tiến trình
-//                    boolean isCompleted = false;
+//                    boolean isCompleted = true;
 //                    int progress = isCompleted ? 100 : random.nextInt(100);
 //                    enrollCourse.setProgress(progress);
 //                    if (isCompleted) {
@@ -167,17 +167,22 @@ public class AppELearingBeApplication implements CommandLineRunner {
 //                    }
 //
 //                    List<Section> sections = sectionRepository.findByCourseId(courseId);
-//                    for (Section s : sections){
+//                    List<LessonUser> lessonUsersToSave = new ArrayList<>();
+//
+//                    for (Section s : sections) {
 //                        List<Lesson> lessons = lessonRepository.findBySectionId(s.getId());
 //                        int lessonprogress = lessons.size() * progress / 100;
-//                        for(int l = 0;  l<lessons.size(); l++){
 //
+//                        for (int l = 0; l < lessons.size(); l++) {
 //                            LessonUser lessonUser = new LessonUser();
 //                            lessonUser.setId(new LessonUserId(lessons.get(l), studentRepository.findById(userId)));
 //                            lessonUser.setStatus(l < lessonprogress ? StatusLesson.COMPLETED : StatusLesson.UNCOMPLETED);
-//                            lessonUserRepository.save(lessonUser);
+//                            lessonUsersToSave.add(lessonUser);
 //                        }
 //                    }
+//
+//                    lessonUserRepository.saveAll(lessonUsersToSave);
+//
 //
 //                    // Lưu vào cơ sở dữ liệu
 //                    enrollCourseRepository.save(enrollCourse);

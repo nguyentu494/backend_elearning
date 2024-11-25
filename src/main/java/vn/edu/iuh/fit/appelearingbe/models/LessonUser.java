@@ -8,6 +8,9 @@ package vn.edu.iuh.fit.appelearingbe.models;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +27,7 @@ import vn.edu.iuh.fit.appelearingbe.ids.LessonUserId;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class LessonUser {
     @EmbeddedId
     private LessonUserId id;

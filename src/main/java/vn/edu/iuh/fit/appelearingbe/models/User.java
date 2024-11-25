@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -35,6 +37,8 @@ public class User {
     private String password;
     private String avatar;
     private String description;
+    private String phone;
+    private LocalDateTime date_of_birth;
 
     public User(String name, String email, String password, String avatar, String description) {
         this.name = name;

@@ -156,6 +156,7 @@ public class CourseController {
 
     @GetMapping("/student/{id}")
     public ResponseEntity<List<CourseComponetDTO>> getCourseByStudent(@PathVariable Long id) {
+
         List<CourseComponetDTO> courseComponetDTOList = new ArrayList<>();
         List<Course> courses = courseRepository.findByEnrollCourses_Id_Student_Id(id);
         courses.forEach(course -> {

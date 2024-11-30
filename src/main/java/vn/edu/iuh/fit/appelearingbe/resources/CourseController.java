@@ -183,6 +183,7 @@ public class CourseController {
             courseComponetDTO.setCourseId(course.getId());
             courseComponetDTO.setCourseName(course.getTitle());
             courseComponetDTO.setCourseImage(course.getImage());
+            courseComponetDTO.setTeacherName(course.getTeacher().getName());
             courseComponetDTO.setRating(course.getRating());
             courseComponetDTO.setNameCategory(course.getCategory().getName());
             courseComponetDTO.setTotal_time_spent(0);
@@ -196,6 +197,7 @@ public class CourseController {
                             lesson.getLessonUsers().stream().anyMatch(lessonUser ->
                                     (lessonUser.getId().getStudent().getId() == id && lessonUser.getStatus().equals(StatusLesson.COMPLETED))
                             )).count()).sum());
+            courseComponetDTO.setTotalStudent(course.getEnrollCourses().size());
             courseComponetDTOList.add(courseComponetDTO);
         });
         return ResponseEntity.ok(courseComponetDTOList);

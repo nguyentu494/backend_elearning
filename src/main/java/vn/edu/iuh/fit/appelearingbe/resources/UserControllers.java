@@ -20,6 +20,7 @@ import vn.edu.iuh.fit.appelearingbe.models.User;
 import vn.edu.iuh.fit.appelearingbe.repositories.UserRepository;
 
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -45,5 +46,35 @@ public class UserControllers {
         return userRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    //add new user
+    @PostMapping(value = "/register", produces = "application/json")
+    public ResponseEntity<?> addUser(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String password = body.get("password");
+        boolean teacher = Boolean.parseBoolean(body.get("role"));
+        System.out.println(teacher);
+        User user1 = userRepository.findByEmail(email);
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        if (user1 != null) {
+            return ResponseEntity.ok("Account already exists");
+        } else {
+            return ResponseEntity.ok(userRepository.save(user));
+        }
+    }
+
+//    //update user
+    @PutMapping(value = "/update", produces = "application/json")
+    public ResponseEntity<?> updateUser(@RequestBody User body) {
+        System.out.println(body.getName());
+        User user = userRepository.findById(body.getId()).orElse(null);
+        if (user == null) {
+            return ResponseEntity.ok("User not found");
+        }else {
+            return ResponseEntity.ok(userRepository.updateAvatarAndNameAndDescriptionAndPhoneAndDate_of_birthById(body.getAvatar(), body.getName(), body.getDescription(), body.getPhone(), body.getDate_of_birth(), body.getId()));
+        }
     }
 }

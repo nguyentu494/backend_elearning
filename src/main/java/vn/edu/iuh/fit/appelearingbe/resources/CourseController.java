@@ -65,10 +65,28 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
-        return courseRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<CourseDetail> getCourseById(@PathVariable long id) {
+        Course course = courseRepository.findById(id);
+            CourseDetail detail = new CourseDetail();
+            detail.setCourse(course);
+            detail.setTeacherName(course.getTeacher().getName());
+            List<Section> sections = sectionRepository.findByCourseId(course.getId());
+            int totalSum = 0;
+            int totalSeconds = 0;
+            for (Section section : sections) {
+                totalSum += lessonRepository.countBySectionId(section.getId());
+                for (Lesson lesson : section.getLessons()) {
+                    String[] timeParts = lesson.getTime().split(":");
+                    int minutes = Integer.parseInt(timeParts[0]);
+                    int seconds = Integer.parseInt(timeParts[1]);
+                    totalSeconds += minutes + seconds/60;
+                }
+            }
+            detail.setTotalLesson(totalSum);
+            detail.setTotalRegister(enrollCourseRepository.countById_Course_Id(course.getId()));
+            detail.setTotalMinutes(totalSeconds);
+
+        return ResponseEntity.ok(detail);
     }
 
     @PostMapping
@@ -101,6 +119,7 @@ public class CourseController {
             detail.setTotalMinutes(totalSeconds);
             courseDetail.add(detail);
         });
+
         return ResponseEntity.ok(courseDetail);
     }
 

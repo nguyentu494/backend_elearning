@@ -38,7 +38,7 @@ public class LessonUserId implements Serializable {
     @JsonBackReference
     private Lesson lesson;
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "user_id")
     @JsonBackReference
     private Student student;
 }

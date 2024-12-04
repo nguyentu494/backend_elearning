@@ -16,6 +16,7 @@ package vn.edu.iuh.fit.appelearingbe.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.iuh.fit.appelearingbe.enums.StatusUserFirstUpdate;
 import vn.edu.iuh.fit.appelearingbe.models.User;
 import vn.edu.iuh.fit.appelearingbe.repositories.UserRepository;
 
@@ -59,6 +60,9 @@ public class UserControllers {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
+        //status 0: chưa cập nhật thông tin
+        //status 1: đã cập nhật thông tin
+        user.setStatus(StatusUserFirstUpdate.NO);
         if (user1 != null) {
             return ResponseEntity.ok("Account already exists");
         } else {
@@ -66,15 +70,37 @@ public class UserControllers {
         }
     }
 
-//    //update user
+    //    //update user
     @PutMapping(value = "/update", produces = "application/json")
     public ResponseEntity<?> updateUser(@RequestBody User body) {
-        System.out.println(body.getName());
+        // Log the user's name (for debugging purposes)
+//        System.out.println(body);
+
+        // Find the user by ID
         User user = userRepository.findById(body.getId()).orElse(null);
+
+        // If user not found, return a response
         if (user == null) {
             return ResponseEntity.ok("User not found");
-        }else {
-            return ResponseEntity.ok(userRepository.updateAvatarAndNameAndDescriptionAndPhoneAndDate_of_birthById(body.getAvatar(), body.getName(), body.getDescription(), body.getPhone(), body.getDate_of_birth(), body.getId()));
+        } else {
+            // Assuming getStatus() returns an enum (e.g., StatusUserFirstUpdate)
+            // If the status is 'YES', map it to 0; otherwise, map it to 1
+//            int statusValue = body.getStatus().equals(StatusUserFirstUpdate.YES) ? 0 : 1;
+//
+//            System.out.println(statusValue);
+
+            // Call the repository method to update the user and return the result
+            return ResponseEntity.ok(userRepository.updateAvatarAndNameAndDescriptionAndPhoneAndDate_of_birthById(
+                    body.getAvatar(),
+                    body.getName(),
+                    body.getDescription(),
+                    body.getPhone(),
+                    body.getDate_of_birth(),
+                    body.getStatus(), // Pass the mapped status (0 or 1)
+                    body.getEmail_contact(),
+                    body.getId()
+            ));
         }
     }
+
 }

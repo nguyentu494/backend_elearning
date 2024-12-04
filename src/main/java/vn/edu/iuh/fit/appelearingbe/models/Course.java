@@ -68,6 +68,11 @@ public class Course {
     @ToString.Exclude
     private List<Feedback> feedbacks;
 
+    @OneToMany(mappedBy = "course")
+    @JsonIgnoreProperties("course")
+    @ToString.Exclude
+    private List<Question> questions;
+
     @OneToMany(mappedBy = "id.course")
     @JsonManagedReference
     @ToString.Exclude

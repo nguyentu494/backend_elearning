@@ -7,6 +7,7 @@
 package vn.edu.iuh.fit.appelearingbe.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ public class Feedback {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+//    @JsonIgnoreProperties
     private User user;
 
     @ManyToOne

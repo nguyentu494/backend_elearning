@@ -7,7 +7,9 @@ import org.springframework.data.repository.query.Param;
 import vn.edu.iuh.fit.appelearingbe.models.Course;
 import vn.edu.iuh.fit.appelearingbe.models.Lesson;
 import vn.edu.iuh.fit.appelearingbe.models.Section;
+import vn.edu.iuh.fit.appelearingbe.models.Student;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
@@ -25,4 +27,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     //get course by student id
     List<Course> findByEnrollCourses_Id_Student_Id(long id);
+
+    @Query("select c from Course c where c.id not in (select ec.id.course.id from EnrollCourse ec where ec.id.student.id = :id)")
+    List<Course> findByEnrollCourses_Id_StudentNot(long id);
+
 }

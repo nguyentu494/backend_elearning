@@ -25,12 +25,11 @@ import vn.edu.iuh.fit.appelearingbe.enums.StatusLesson;
 import vn.edu.iuh.fit.appelearingbe.models.Course;
 import vn.edu.iuh.fit.appelearingbe.models.Lesson;
 import vn.edu.iuh.fit.appelearingbe.models.Section;
-import vn.edu.iuh.fit.appelearingbe.repositories.CourseRepository;
-import vn.edu.iuh.fit.appelearingbe.repositories.EnrollCourseRepository;
-import vn.edu.iuh.fit.appelearingbe.repositories.LessonRepository;
-import vn.edu.iuh.fit.appelearingbe.repositories.SectionRepository;
+import vn.edu.iuh.fit.appelearingbe.models.Student;
+import vn.edu.iuh.fit.appelearingbe.repositories.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -45,6 +44,8 @@ public class CourseController {
     private LessonRepository lessonRepository;
     @Autowired
     private EnrollCourseRepository enrollCourseRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
     @GetMapping
     public ResponseEntity<List<CourseComponetDTO>> getAllCategories() {
@@ -87,6 +88,36 @@ public class CourseController {
             detail.setTotalMinutes(totalSeconds);
 
         return ResponseEntity.ok(detail);
+    }
+
+    @GetMapping("/recommend/{id}")
+    public ResponseEntity<List<CourseDetail>> getRecommendCourse(@PathVariable long id) {
+        List<CourseDetail> courseDetail = new ArrayList<>();
+
+        List<Course> courses = courseRepository.findByEnrollCourses_Id_StudentNot(id);
+        courses.forEach(course -> {
+            CourseDetail detail = new CourseDetail();
+            detail.setCourse(course);
+            detail.setTeacherName(course.getTeacher().getName());
+            List<Section> sections = sectionRepository.findByCourseId(course.getId());
+            int totalSum = 0;
+            int totalSeconds = 0;
+            for (Section section : sections) {
+                totalSum += lessonRepository.countBySectionId(section.getId());
+                for (Lesson lesson : section.getLessons()) {
+                    String[] timeParts = lesson.getTime().split(":");
+                    int minutes = Integer.parseInt(timeParts[0]);
+                    int seconds = Integer.parseInt(timeParts[1]);
+                    totalSeconds += minutes + seconds/60;
+                }
+            }
+            detail.setTotalLesson(totalSum);
+            detail.setTotalRegister(enrollCourseRepository.countById_Course_Id(course.getId()));
+            detail.setTotalMinutes(totalSeconds);
+            courseDetail.add(detail);
+        });
+
+        return ResponseEntity.ok(courseDetail);
     }
 
     @PostMapping

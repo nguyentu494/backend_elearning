@@ -6,12 +6,15 @@
 
 package vn.edu.iuh.fit.appelearingbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /*
  * @description:
@@ -36,4 +39,7 @@ public class Question {
     private String comment;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+    @OneToMany(mappedBy = "question")
+    @JsonIgnoreProperties("question")
+    private List<Answer> answers;
 }

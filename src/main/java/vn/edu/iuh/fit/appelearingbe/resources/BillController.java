@@ -53,6 +53,7 @@ public class BillController {
     public ResponseEntity<String> saveBill(@RequestBody Map<String, String> bill) {
         try {
 //            Bill savedBill = billRepository.save(bill);
+            System.out.println(bill.toString());
             long userId = Long.parseLong(bill.get("userId"));
             long courseId = Long.parseLong(bill.get("courseId"));
             String status = bill.get("status");
@@ -70,7 +71,7 @@ public class BillController {
             Student student = studentRepository.findById(userId);
             enrollCourseId.setStudent(student);
 
-//            System.out.println(enrollCourseId);
+            System.out.println(enrollCourseId);
 
             Bill savedBill = new Bill();
             long paymentId = Long.parseLong(bill.get("paymentId"));

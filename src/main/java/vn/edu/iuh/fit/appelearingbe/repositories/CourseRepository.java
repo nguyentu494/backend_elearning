@@ -22,10 +22,13 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             where upper(c.category.name) like upper(concat('%', ?1, '%')) or upper(c.teacher.name) like upper(concat('%', ?2, '%')) or upper(c.title) like upper(concat('%', ?3, '%'))""")
     List<Course> findTop9ByCategory_NameContainsIgnoreCaseOrTeacher_NameContainsIgnoreCaseOrTitleContainsIgnoreCase(String name, String name1, String title);
 
-    //Top 5 theo view
-    List<Course> findTop5ByOrderByViewDesc();
+    //Top 5 theo view mà user chưa enroll
+    @Query("""
+            select c from Course c
+            where c.id not in (select ec.id.course.id from EnrollCourse ec where ec.id.student.id = :id)
+            order by c.view desc""")
+    List<Course> findTop5ByViewNot(long id);
 
-    //get course by student id
     List<Course> findByEnrollCourses_Id_Student_Id(long id);
 
     @Query("select c from Course c where c.id not in (select ec.id.course.id from EnrollCourse ec where ec.id.student.id = :id)")

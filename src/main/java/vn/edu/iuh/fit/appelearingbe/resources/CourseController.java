@@ -186,10 +186,10 @@ public class CourseController {
         });
         return ResponseEntity.ok(courseDetail);
     }
-    @GetMapping("/popular")
-    public ResponseEntity<List<CourseComponetDTO>> getCourseTop5() {
+    @GetMapping("/popular/{id}")
+    public ResponseEntity<List<CourseComponetDTO>> getCourseTop5(@PathVariable Long id) {
         List<CourseComponetDTO> courseComponetPopularDTOList = new ArrayList<>();
-        List<Course> courses = courseRepository.findTop5ByOrderByViewDesc();
+        List<Course> courses = courseRepository.findTop5ByViewNot(id);
         courses.forEach(course -> {
             CourseComponetDTO courseComponetPopularDTO = new CourseComponetDTO();
             courseComponetPopularDTO.setCourseId(course.getId());
